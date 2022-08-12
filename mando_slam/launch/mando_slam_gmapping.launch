@@ -20,7 +20,7 @@
     <rosparam command="load" file="$(find mando_slam)/config/gmapping_params.yaml" />
   </node>
 
-<!--    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find scout_description)/rviz/scout_mini_slam.rviz" />-->
+   <node name="rviz" pkg="rviz" type="rviz" args="-d $(find mando_slam)/rviz/gmapping.rviz" />
 
 
 </launch>
