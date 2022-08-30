@@ -5,7 +5,7 @@
 
     <plugin name="skid_steer_drive_controller" filename="libgazebo_ros_skid_steer_drive.so">
       <updateRate>100.0</updateRate>
-      <robotNamespace>/</robotNamespace>
+      <!-- <robotNamespace>/</robotNamespace> -->
       <leftFrontJoint>left_wheel_hinge_front</leftFrontJoint>
       <rightFrontJoint>right_wheel_hinge_front</rightFrontJoint>
       <leftRearJoint>left_wheel_hinge_back</leftRearJoint>
@@ -20,7 +20,7 @@
 
       <topicName>cmd_vel</topicName>
       <odometryTopic>odom</odometryTopic>
-      <odometrySource>1</odometrySource>
+      <!-- <odometrySource>1</odometrySource> -->
       <odometryFrame>odom</odometryFrame>
 
       <commandTopic>cmd_vel</commandTopic>
@@ -35,9 +35,15 @@
       <!-- <covariance_yaw>0.01</covariance_yaw> -->
       <covariance_yaw>100000</covariance_yaw>
 
+      <!-- <publishOdomTF>false</publishOdomTF>
+      <publishTf>true</publishTf>
+      <publishWheelTF>false</publishWheelTF>
+      <odometrySource>world</odometrySource> -->
       <!-- <dynamics damping="0"/> -->
 
     </plugin>
+
+    
 
   </gazebo>
   
@@ -48,7 +54,7 @@
   </gazebo> -->
 
   <!-- camera -->
-  <gazebo reference="camera">
+  <!-- <gazebo reference="camera">
     <sensor type="camera" name="camera1">
       <update_rate>30.0</update_rate>
       <camera name="head">
@@ -78,7 +84,7 @@
         <distortionT2>0.0</distortionT2>
       </plugin>
     </sensor>
-  </gazebo>
+  </gazebo> -->
 
   <!-- hokuyo -->
   <!-- <gazebo reference="hokuyo">
@@ -150,7 +156,6 @@
       </plugin>
     </sensor>
   </gazebo>
-
 
     <gazebo>
     <plugin name="imu_plugin" filename="libgazebo_ros_imu.so">

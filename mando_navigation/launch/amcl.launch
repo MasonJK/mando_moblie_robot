@@ -1,13 +1,13 @@
 <launch>
   <!-- Arguments -->
   <arg name="scan_topic"     default="scan"/>
-  <arg name="initial_pose_x" default="10.0"/>
-  <arg name="initial_pose_y" default="-1.0"/>
+  <arg name="initial_pose_x" default="5.0"/>
+  <arg name="initial_pose_y" default="5.0"/>
   <arg name="initial_pose_a" default="0.0"/>
+  <arg name="frame" default="robot"/>
 
   <!-- AMCL -->
   <node pkg="amcl" type="amcl" name="amcl">
-
     <param name="min_particles"             value="500"/>
     <param name="max_particles"             value="4000"/>
     <param name="kld_err"                   value="0.02"/>
@@ -23,7 +23,7 @@
     <param name="gui_publish_rate"          value="50.0"/>
 
     <remap from="scan"                      to="$(arg scan_topic)"/>
-    <param name="laser_max_range"           value="3.5"/>
+    <param name="laser_max_range"           value="8"/>
     <param name="laser_max_beams"           value="180"/>
     <param name="laser_z_hit"               value="0.5"/>
     <param name="laser_z_short"             value="0.05"/>
@@ -39,9 +39,8 @@
     <param name="odom_alpha2"               value="0.1"/>
     <param name="odom_alpha3"               value="0.1"/>
     <param name="odom_alpha4"               value="0.1"/>
-    <param name="odom_frame_id"             value="odom"/>
-    <param name="base_frame_id"             value="base_footprint"/>
-
-
+    <param name="odom_frame_id"             value="$(arg frame)/odom"/>
+    <param name="base_frame_id"             value="$(arg frame)/base_footprint"/>
+    <param name="global_frame_id"           value="map"/>
   </node>
 </launch>
