@@ -1,7 +1,7 @@
 <?xml version='1.0'?>
 
-<robot name="atom" xmlns:xacro="http://www.ros.org/wiki/xacro">
-	<xacro:property name="robot_name" value="atom" />
+<robot name="atom_target" xmlns:xacro="http://www.ros.org/wiki/xacro">
+	<xacro:property name="robot_name" value="atom_target" />
 	<!-- <xacro:property name="robot_chassis_mass" value="15"/> -->
 	<xacro:property name="robot_chassis_mass" value="15" />
 	<xacro:property name="robot_chassis_length" value="0.2" />
@@ -46,10 +46,8 @@
 	<xacro:property name="camera_mass" value="0.1" />
 	<xacro:property name="hokoyu_mass" value="1e-5" />
 
-	<xacro:arg name="frame" default="" />
-
 	<!-- Project center to the ground -->
-	<link name="base_footprint">
+	<link name="base_footprint_target">
 		<visual>
 			<origin xyz="0 0 0.0" rpy="1.57 0 -1.57" />
 			<geometry>
@@ -60,13 +58,12 @@
 			<origin xyz="0 0 0" rpy="1.57 0 -1.57" />
 			<geometry>
 				<mesh filename="package://mando_description/meshes/scout_mini/scout_mini_base_link2.dae" />
-				<!-- <box size="0.5 0.5 0.2"/> -->
 			</geometry>
 		</collision>
 	</link>
 
 	<!-- Make Chassis of Bot (Inertia Link) -->
-	<link name="chassis">
+	<link name="chassis_target">
 		<inertial>
 			<mass value="50" />
 			<origin xyz="0.0 0.0 0.0" />
@@ -89,8 +86,8 @@
 	<!-- Robot base + Inertia  -->
 	<joint name="base_footprint_joint" type="fixed">
 		<origin xyz="0 0 0" rpy="0 0 0" />
-		<parent link="base_footprint" />
-		<child link="chassis" />
+		<parent link="base_footprint_target" />
+		<child link="chassis_target" />
 	</joint>
 
 
@@ -99,7 +96,7 @@
 				izz="0.1361" -->
 
 	<!-- Right Wheel Back -->
-	<link name="right_wheel_back">
+	<link name="right_wheel_back_target">
 		<inertial>
 			<mass value="${robot_wheel_mass}" />
 			<origin xyz="0 0 0" rpy="0 1.5707 -1.5707" />
@@ -129,7 +126,7 @@
 	</link>
 
 	<!-- Right Wheel Front-->
-	<link name="right_wheel_front">
+	<link name="right_wheel_front_target">
 		<inertial>
 			<mass value="${robot_wheel_mass}" />
 			<origin xyz="0 0 0" rpy="0 1.5707 -1.5707" />
@@ -157,7 +154,7 @@
 
 
 	<!-- Left wheel Back-->
-	<link name="left_wheel_back">
+	<link name="left_wheel_back_target">
 		<inertial>
 			<mass value="${robot_wheel_mass}" />
 			<origin xyz="0 0 0" rpy="0 1.5707 1.5707" />
@@ -184,7 +181,7 @@
 	</link>
 
 	<!-- Left wheel Front-->
-	<link name="left_wheel_front">
+	<link name="left_wheel_front_target">
 		<inertial>
 			<mass value="${robot_wheel_mass}" />
 			<origin xyz="0 0 0" rpy="0 1.5707 1.5707" />
@@ -211,7 +208,7 @@
 	</link>
 
 	<!-- Camera -->
-	<link name="camera">
+	<link name="camera_target">
 		<inertial>
 			<mass value="${camera_mass}" />
 			<origin xyz="0 0 0" rpy="0 0 0" />
@@ -263,7 +260,7 @@
 
 
 	<!-- 2D Lidar  -->
-	<link name="base_scan">
+	<link name="base_scan_target">
 		<visual>
 			<origin xyz="0 0 0.0" rpy="0 0 0" />
 			<geometry>
@@ -287,25 +284,25 @@
 	</link>
 
 	<joint name="scan_joint" type="fixed">
-		<parent link="chassis" />
-		<child link="base_scan" />
+		<parent link="chassis_target" />
+		<child link="base_scan_target" />
 		<origin xyz="-0.032 0 0.172" rpy="0 0 0" />
 	</joint>
 
 
 	<!-- IMU Sensor -->
 	<joint name="imu_joint" type="fixed">
-		<parent link="chassis" />
-		<child link="imu_link" />
+		<parent link="chassis_target" />
+		<child link="imu_link_target" />
 		<origin xyz="0 0 0" rpy="0 0 0" />
 	</joint>
 
-	<link name="imu_link" />
+	<link name="imu_link_target" />
 
 
 	<!-- 3D Lidar Velodyne  -->
 	<xacro:include filename="$(find velodyne_description)/urdf/VLP-16.urdf.xacro" />
-	<xacro:VLP-16 parent="chassis" name="velodyne" topic="/velodyne_points" hz="10" samples="440">
+	<xacro:VLP-16 parent="chassis_target" name="velodyne_target" topic="/velodyne_points_target" hz="10" samples="440">
 		<origin xyz="0 0 0.4" rpy="0 0 0" />
 	</xacro:VLP-16>
 
@@ -316,8 +313,8 @@
 	<joint type="continuous" name="right_wheel_hinge_back">
 		<!-- <origin xyz="-0.2 -0.30 0" rpy="0 0 0" /> -->
 		<origin xyz="${-wheelbase/2} ${-track/2} ${wheel_vertical_offset}" rpy="0 0 0" />
-		<parent link="chassis" />
-		<child link="right_wheel_back" />
+		<parent link="chassis_target" />
+		<child link="right_wheel_back_target" />
 		<axis xyz="0 1 0" rpy="0 0 0" />
 		<!-- <limit effort="10000" velocity="1000" />
 	    <dynamics damping="1.0" friction="1.0" /> -->
@@ -327,8 +324,8 @@
 	<joint type="continuous" name="right_wheel_hinge_front">
 		<!-- <origin xyz="0.2 -0.30 0" rpy="0 0 0" /> -->
 		<origin xyz="${wheelbase/2} ${-track/2} ${wheel_vertical_offset}" rpy="0 0 0" />
-		<parent link="chassis" />
-		<child link="right_wheel_front" />
+		<parent link="chassis_target" />
+		<child link="right_wheel_front_target" />
 		<axis xyz="0 1 0" rpy="0 0 0" />
 		<!-- <limit effort="10000" velocity="1000" />
 	    <dynamics damping="1.0" friction="1.0" /> -->
@@ -339,8 +336,8 @@
 	<joint type="continuous" name="left_wheel_hinge_back">
 		<!-- <origin xyz="-0.2 0.30 0" rpy="0 0 0" /> -->
 		<origin xyz="${-wheelbase/2} ${track/2} ${wheel_vertical_offset}" rpy="0 0 0" />
-		<parent link="chassis" />
-		<child link="left_wheel_back" />
+		<parent link="chassis_target" />
+		<child link="left_wheel_back_target" />
 		<axis xyz="0 1 0" rpy="0 0 0" />
 		<!-- <limit effort="10000" velocity="1000" />
 	    <dynamics damping="1.0" friction="1.0" /> -->
@@ -350,8 +347,8 @@
 	<joint type="continuous" name="left_wheel_hinge_front">
 		<!-- <origin xyz="0.2 0.30 0" rpy="0 0 0" /> -->
 		<origin xyz="${wheelbase/2} ${track/2} ${wheel_vertical_offset}" rpy="0 0 0" />
-		<parent link="chassis" />
-		<child link="left_wheel_front" />
+		<parent link="chassis_target" />
+		<child link="left_wheel_front_target" />
 		<axis xyz="0 1 0" rpy="0 0 0" />
 		<!-- <limit effort="10000" velocity="1000" />
 	    <dynamics damping="1.0" friction="1.0" /> -->
@@ -360,8 +357,8 @@
 	<!-- Camera Joint -->
 	<joint name="camera_joint" type="fixed">
 		<origin xyz="0.26 0 0" rpy="0 0 0" />
-		<parent link="chassis" />
-		<child link="camera" />
+		<parent link="chassis_target" />
+		<child link="camera_target" />
 		<axis xyz="0 1 0" />
 	</joint>
 
@@ -374,16 +371,16 @@
 	</joint> -->
 
 
-	<gazebo reference="camera">
+	<gazebo reference="camera_target">
 		<!-- <material>Gazebo/Red</material> -->
 	</gazebo>
 
-	<gazebo reference="chassis">
+	<gazebo reference="chassis_target">
 		<!-- <material>Gazebo/Blue</material> -->
 	</gazebo>
 
 	<!-- Color of bot -->
-	<gazebo reference="left_wheel_front">
+	<gazebo reference="left_wheel_front_target">
 		<!-- <material>Gazebo/Green</material> -->
 		<kp>100000000</kp> <!-- kp and kd for rubber -->
 		<kd>10.0</kd>
@@ -393,7 +390,7 @@
 		<minDepth>0.00</minDepth>
 	</gazebo>
 
-	<gazebo reference="left_wheel_back">
+	<gazebo reference="left_wheel_back_target">
 		<!-- <material>Gazebo/Green</material> -->
 		<kp>100000000</kp> <!-- kp and kd for rubber -->
 		<kd>10.0</kd>
@@ -403,7 +400,7 @@
 		<minDepth>0.00</minDepth>
 	</gazebo>
 
-	<gazebo reference="right_wheel_front">
+	<gazebo reference="right_wheel_front_target">
 		<!-- <material>Gazebo/Green</material> -->
 		<kp>100000000</kp> <!-- kp and kd for rubber -->
 		<kd>10.0</kd>
@@ -412,7 +409,7 @@
 		<maxVel>0.0</maxVel>
 		<minDepth>0.00</minDepth>
 	</gazebo>
-	<gazebo reference="right_wheel_back">
+	<gazebo reference="right_wheel_back_target">
 		<!-- <material>Gazebo/Green</material> -->
 		<kp>100000000</kp> <!-- kp and kd for rubber -->
 		<kd>10.0</kd>
@@ -424,6 +421,6 @@
 
 
 	<!-- Motor, Camera and Lidar Simulation -->
-	<xacro:include filename="$(find mando_description)/urdf/scout_mini/scout_mini.gazebo" />
+	<xacro:include filename="$(find mando_description)/urdf/scout_mini/scout_mini_target.gazebo" />
 
 </robot>
