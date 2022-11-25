@@ -1,6 +1,8 @@
 local_costmap:
-  global_frame: robot/odom
-  robot_base_frame: robot/base_footprint
+  # global_frame: robot/odom
+  # robot_base_frame: robot/base_footprint
+  global_frame: odom
+  robot_base_frame: base_footprint
 
   update_frequency: 10.0
   publish_frequency: 10.0
@@ -16,13 +18,12 @@ local_costmap:
   - {name: static_layer, type: "costmap_2d::StaticLayer"}
   - {name: obstacle_layer, type: "costmap_2d::ObstacleLayer"}
   # - {name: mando_layer, type: "mando_namespace::MandoLayer"}
-  - {name: inflation_layer, type: "costmap_2d::InflationLayer"}
+  # - {name: inflation_layer, type: "costmap_2d::InflationLayer"}
 
 
   obstacle_layer:
     observation_sources: scan
-    scan: {sensor_frame: robot/base_scan, data_type: LaserScan, topic: scan_filtered, marking: true, clearing: true, obstacle_range: 4.0, raytrace_range: 5.0}
-    # scan: {sensor_frame: base_scan, data_type: LaserScan, topic: scan_filtered, marking: true, clearing: true, obstacle_range: 4.0, raytrace_range: 5.0}
+    scan: {sensor_frame: base_scan, data_type: LaserScan, topic: scan_filtered, marking: true, clearing: true, obstacle_range: 4.0, raytrace_range: 5.0}
   inflation_layer:
     inflation_radius: 1.5
     cost_scaling_factor: 2.58

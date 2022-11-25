@@ -5,7 +5,7 @@
 
     <plugin name="skid_steer_drive_controller" filename="libgazebo_ros_skid_steer_drive.so">
       <updateRate>100.0</updateRate>
-      <robotNamespace>/</robotNamespace>
+      <!-- <robotNamespace>/</robotNamespace> -->
       <leftFrontJoint>left_wheel_hinge_front</leftFrontJoint>
       <rightFrontJoint>right_wheel_hinge_front</rightFrontJoint>
       <leftRearJoint>left_wheel_hinge_back</leftRearJoint>
@@ -20,12 +20,12 @@
 
       <topicName>cmd_vel</topicName>
       <odometryTopic>odom</odometryTopic>
-      <odometrySource>1</odometrySource>
+      <!-- <odometrySource>1</odometrySource> -->
       <odometryFrame>odom</odometryFrame>
 
       <commandTopic>cmd_vel</commandTopic>
       <topic_name_twist>cmd_vel</topic_name_twist>
-      <topic_name_odometry>odom</topic_name_odometry>
+      <!-- <topic_name_odometry>odom</topic_name_odometry> -->
       <topic_name_joint>joint</topic_name_joint>
 
       <broadcastTF>true</broadcastTF>
@@ -35,9 +35,15 @@
       <!-- <covariance_yaw>0.01</covariance_yaw> -->
       <covariance_yaw>100000</covariance_yaw>
 
+      <publishOdomTF>false</publishOdomTF>
+      <publishTf>false</publishTf>
+      <publishWheelTF>false</publishWheelTF>
+      <odometrySource>world</odometrySource>
       <!-- <dynamics damping="0"/> -->
 
     </plugin>
+
+    
 
   </gazebo>
   
@@ -48,7 +54,7 @@
   </gazebo> -->
 
   <!-- camera -->
-  <gazebo reference="camera">
+  <!-- <gazebo reference="camera">
     <sensor type="camera" name="camera1">
       <update_rate>30.0</update_rate>
       <camera name="head">
@@ -78,7 +84,7 @@
         <distortionT2>0.0</distortionT2>
       </plugin>
     </sensor>
-  </gazebo>
+  </gazebo> -->
 
   <!-- hokuyo -->
   <!-- <gazebo reference="hokuyo">
@@ -118,12 +124,12 @@
   </gazebo> -->
 
 
-    <gazebo reference="base_scan">
+  <gazebo reference="base_scan">
     <material>Gazebo/FlatBlack</material>
     <sensor type="ray" name="lds_lfcd_sensor">
       <pose>0 0 0 0 0 0</pose>
       <visualize>false</visualize>
-      <update_rate>30</update_rate>
+      <update_rate>20</update_rate>
       <ray>
         <scan>
           <horizontal>
@@ -135,7 +141,7 @@
         </scan>
         <range>
           <min>0.120</min>
-          <max>31</max>
+          <max>30</max>
           <resolution>0.015</resolution>
         </range>
         <noise>
@@ -151,16 +157,16 @@
     </sensor>
   </gazebo>
 
-
-    <gazebo>
+  <gazebo>
     <plugin name="imu_plugin" filename="libgazebo_ros_imu.so">
       <alwaysOn>true</alwaysOn>
       <bodyName>imu_link</bodyName>
       <frameName>imu_link</frameName>
       <topicName>imu</topicName>
+      <gravity>true</gravity>
       <serviceName>imu_service</serviceName>
       <gaussianNoise>0.0</gaussianNoise>
-      <updateRate>0</updateRate>
+      <updateRate>100</updateRate>
       <imu>
         <noise>
           <type>gaussian</type>
@@ -180,6 +186,27 @@
       </imu>
     </plugin>
   </gazebo>
+<!-- 
+  <gazebo reference="imu_link">
+    <gravity>true</gravity>
+    <sensor name="imu_sensor" type="imu">
+      <always_on>true</always_on>
+      <update_rate>100</update_rate>
+      <visualize>true</visualize>
+      <topic>__default_topic__</topic>
+      <plugin filename="libgazebo_ros_imu_sensor.so" name="imu_plugin">
+        <topicName>imu</topicName>
+        <bodyName>imu_link</bodyName>
+        <updateRateHZ>200.0</updateRateHZ>
+        <gaussianNoise>0.0</gaussianNoise>
+        <xyzOffset>0 0 0</xyzOffset>
+        <rpyOffset>0 0 0</rpyOffset>
+        <frameName>imu_link</frameName>
+        <initialOrientationAsReference>false</initialOrientationAsReference>
+      </plugin>
+      <pose>0 0 0 0 0 0</pose>
+    </sensor>
+  </gazebo> -->
 
 
 </robot>

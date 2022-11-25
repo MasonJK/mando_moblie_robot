@@ -9,11 +9,10 @@
     <param name="base_local_planner" value="dwa_local_planner/DWAPlannerROS" />
     <rosparam file="$(find mando_navigation)/param/costmap_common_params_scout_mini.yaml" command="load" ns="global_costmap" />
     <rosparam file="$(find mando_navigation)/param/costmap_common_params_scout_mini.yaml" command="load" ns="local_costmap" />
-    <rosparam file="$(find mando_navigation)/param/local_costmap_params.yaml" command="load" />
-    <rosparam file="$(find mando_navigation)/param/global_costmap_params.yaml" command="load" />
+    <rosparam file="$(find mando_navigation)/param/local_costmap_params_single.yaml" command="load" />
+    <rosparam file="$(find mando_navigation)/param/global_costmap_params_single.yaml" command="load" />
     <rosparam file="$(find mando_navigation)/param/move_base_params.yaml" command="load" />
     <rosparam file="$(find mando_navigation)/param/dwa_local_planner_params_scout_mini.yaml" command="load" />
-
 
     <remap from="cmd_vel" to="$(arg cmd_vel_topic)"/>
     <remap from="odom" to="$(arg odom_topic)"/>
